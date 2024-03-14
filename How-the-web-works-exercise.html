@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How the Web Works Exercise</title>
+</head>
+<body>
+<!--Part One-->
+<!-- 
+- HTTP is Hypertext Transfer Protocol (the standard web). It is the means by which browsers and servers communicate.
+
+- A URL is a Uniform Resource Locator. It is the address of an individual unique internet resource.
+
+- DNS is domain name service. It turns a hostname, out of human-readable URLs, into an IP address. 
+
+- A query string provides "extra information" in the form of such elements as info from forms and search terms, to the server, and it passes key-value pairs into the URL, in the format ?key1=value1&key2=value2...
+
+- Two HTTP verbs are GET and POST. GET is for requests without side effects that don't change server data, while POST is for requests with side effects that change data on the server.
+
+- An HTTP request is made from a client to a host located on the server in order to receive a resource needed to build the content, following the HTTP protocol. When they make a request, clients use a URL that contains the information needed to access the server resources. An HTTP request is made out of 3 components: request line, headers, and message body. 
+
+- An HTTP response is made by a server to a client following the HTTP protocl. The aim of the response is to provide the client with the resource it requested, or inform the client that the action it requested has been carried out; or else to inform the client that an errror occurred in processing its request. An HTTP response contains: a status line, a series of HTTP headers, or header fields, and in many instances, a message body. Each HTTP header is followed by a carriage return line feed (CRLF). After the last of the HTTP headers, an additional CRLF is used (to give an empty line), and then the message body begins.
+
+- An HTTP header is a field of an HTTP request or response that passes additional context and metadata about the request or response. For example, a request message can use headers to indicate its preferred media formats, while a response can use header to indicate the media format of the returned body. A couple examples of request and response headers you have seen are: acceot fields, cookie, and authorization.
+
+- The processes that happen when you type “http://somesite.com/some/page.html” into a browser are: URL parsing, DNS lookup, TCP connection, HTTP request (an HTTP GET request), Server processing, server (usually HTTP) response with a status code (200 if it was successful), the browser makes a DOM from that HTML, finding any other needed resources (like CSS, JavaScript, or images) for page rendering, the browser makes separate HTTP requests for those resources, receives response from the server for each, and connection closure.
+-->
+  
+<!--Part Two-->
+<!--1. drewharnedy@Drews-MacBook-Air ~ % curl -v icanhazdadjoke.com
+* Host icanhazdadjoke.com:80 was resolved.
+* IPv6: (none)
+* IPv4: 104.21.66.15, 172.67.198.173
+*   Trying 104.21.66.15:80...
+* Connected to icanhazdadjoke.com (104.21.66.15) port 80
+> GET / HTTP/1.1
+> Host: icanhazdadjoke.com
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+< HTTP/1.1 308 Permanent Redirect
+< Date: Thu, 14 Mar 2024 15:57:18 GMT
+< Content-Length: 0
+< Connection: keep-alive
+< Location: https://icanhazdadjoke.com/
+< CF-Cache-Status: DYNAMIC
+< Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=krbuYKnHKFFB%2FJYFTVnrrk9OGO62e1D3PrGJu2Mc0FNmn70nHfg8bQNs02eh5liMkTA0jxS%2FmlMjTUgyEBPfeMzJsq23gKrFphkft5rno3TFo%2Fo0K0vXBL4pmfCsXUNH%2B6uXacM%3D"}],"group":"cf-nel","max_age":604800}
+< NEL: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+< X-Content-Type-Options: nosniff
+< Server: cloudflare
+< CF-RAY: 8645756f1b3e6dcd-MIA
+< alt-svc: h3=":443"; ma=86400
+< 
+* Connection #0 to host icanhazdadjoke.com left intact
+    
+    2. drewharnedy@Drews-MacBook-Air ~ % dig icanhazdadjoke.com
+
+; <<>> DiG 9.10.6 <<>> icanhazdadjoke.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 43346
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 13
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+;; QUESTION SECTION:
+;icanhazdadjoke.com.		IN	A
+
+;; ANSWER SECTION:
+icanhazdadjoke.com.	300	IN	A	172.67.198.173
+icanhazdadjoke.com.	300	IN	A	104.21.66.15
+
+;; AUTHORITY SECTION:
+icanhazdadjoke.com.	172800	IN	NS	kai.ns.cloudflare.com.
+icanhazdadjoke.com.	172800	IN	NS	marjory.ns.cloudflare.com.
+
+;; ADDITIONAL SECTION:
+kai.ns.cloudflare.com.	5437	IN	A	108.162.193.188
+kai.ns.cloudflare.com.	5437	IN	A	172.64.33.188
+kai.ns.cloudflare.com.	5437	IN	A	173.245.59.188
+marjory.ns.cloudflare.com. 18909 IN	A	172.64.32.193
+marjory.ns.cloudflare.com. 18909 IN	A	173.245.58.193
+marjory.ns.cloudflare.com. 18909 IN	A	108.162.192.193
+kai.ns.cloudflare.com.	5437	IN	AAAA	2803:f800:50::6ca2:c1bc
+kai.ns.cloudflare.com.	5437	IN	AAAA	2a06:98c1:50::ac40:21bc
+kai.ns.cloudflare.com.	5437	IN	AAAA	2606:4700:58::adf5:3bbc
+marjory.ns.cloudflare.com. 60962 IN	AAAA	2803:f800:50::6ca2:c0c1
+marjory.ns.cloudflare.com. 60962 IN	AAAA	2a06:98c1:50::ac40:20c1
+marjory.ns.cloudflare.com. 60962 IN	AAAA	2606:4700:50::adf5:3ac1
+
+;; Query time: 25 msec
+;; SERVER: 23.252.205.6#53(23.252.205.6)
+;; WHEN: Thu Mar 14 11:58:56 EDT 2024
+;; MSG SIZE  rcvd: 397
+
+
+3. drewharnedy@Drews-MacBook-Air USFCodingBootcamp % cd How-the-Web-Works 
+drewharnedy@Drews-MacBook-Air How-the-Web-Works % ls
+How the Web Works Notes.docx	~$w the Web Works Notes.docx
+How-the-Web-Works-Exercise
+drewharnedy@Drews-MacBook-Air How-the-Web-Works % cd How-the-Web-Works-Exercise
+drewharnedy@Drews-MacBook-Air How-the-Web-Works-Exercise % ls
+How-the-web-works-exercise.html
+drewharnedy@Drews-MacBook-Air How-the-Web-Works-Exercise % python3 -m http.server
+Serving HTTP on :: port 8000 (http://[::]:8000/) ...
+::1 - - [14/Mar/2024 12:11:21] "GET / HTTP/1.1" 200 -
+::1 - - [14/Mar/2024 12:11:21] code 404, message File not found
+::1 - - [14/Mar/2024 12:11:21] "GET /favicon.ico HTTP/1.1" 404 -
+
+-->
+
+<!--Part Three-->
+<a href="/about-us">About Us</a>
+
+<a href="/search?q=lemurs">Search For Lemurs!</a>
+
+<!-- will submit to URL like /search?q=value-in-input -->
+<form action="/search" method="POST">
+  Search for <input name="q">
+  <button type="submit">Search!</button>
+</form>
+<!--GET http://127.0.0.1:5500/search?q=lemur 404 (Not Found)
+  POST Failed to load resource: the server responded with a status of 405 (). After using POST, you no longer see the query string.-->
+
+<!--Part Four-->
+<!-- 1.URL
+ƒ URL() { [native code] }
+
+2. origin
+'https://lessons.springboard.com' 
+
+3. toString()
+'[object Undefined]'-->
+
+</body>
+</html>
